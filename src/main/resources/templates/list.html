@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<!--<body style="background-color:powderblue;">-->
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <nav th:insert="base :: header"></nav>
+    <style>
+        body {
+            background-image: url("https://res.cloudinary.com/dblshzqgd/image/upload/v1541641027/samples/landscapes/beach-boat.jpg");
+            background-color: #16181b;
+        }
+    </style>
+
+</head>
+<body>
+
+<nav th:replace="base :: nav"></nav>
+
+<br/>
+<br/>
+<br/>
+<br/>
+
+<a href="/add" style="text-align:center;">Add a Course</a><br/>
+
+<table>
+    <tr>
+        <th> Course Title</th>
+        <th> Instructor</th>
+        <th> Credit</th>
+        <th> Actions</th>
+    </tr>
+    <tr th:each="course : ${courses}">
+        <td th:text="${course.title}"></td>
+        <td th:text="${course.instructor}"></td>
+        <td th:text="${course.credit}"></td>
+        <td>
+            <a th:href="@{/update/{id}(id=${course.id})}">Update</a>
+            <a th:href="@{/detail/{id}(id=${course.id})}">Details</a>
+            <div sec:authorize="hasAuthority('ADMIN')">
+                <a th:href="@{/delete/{id}(id=${course.id})}">Delete</a>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<nav th:replace="base:: footer"></nav>
+</body>
+</html>
